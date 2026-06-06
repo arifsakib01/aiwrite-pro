@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIWrite Pro — Free AI Content Generator</title>
+<meta name="description" content="Free AI-powered content generator. Create blog posts, social captions, ad copy, product descriptions and more instantly.">
+
+<!-- ===== GOOGLE ADSENSE — Replace ca-pub-XXXXXXXXXXXXXXXX with your real publisher ID ===== -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131a;
+    --surface2: #1c1c27;
+    --border: rgba(255,255,255,0.08);
+    --accent: #7c6dfa;
+    --accent2: #fa6d9a;
+    --text: #f0eff8;
+    --muted: #8b8aa0;
+    --success: #4ade80;
+    --font-head: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --r: 12px;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── TOP AD BANNER ── */
+  .ad-banner {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    min-height: 60px;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    gap: 12px;
+  }
+  .ad-banner .ad-slot {
+    width: 728px;
+    height: 90px;
+    max-width: 100%;
+    background: rgba(255,255,255,0.03);
+    border: 1px dashed rgba(255,255,255,0.1);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* ── HEADER ── */
+  header {
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .logo {
+    font-family: var(--font-head);
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .badge {
+    font-size: 11px;
+    background: rgba(124,109,250,0.15);
+    color: var(--accent);
+    border: 1px solid rgba(124,109,250,0.3);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center;
+    padding: 48px 24px 32px;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .hero h1 {
+    font-family: var(--font-head);
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+  }
+  .hero h1 span {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero p {
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px 60px;
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 24px;
+    align-items: start;
+  }
+  @media (max-width: 820px) {
+    .main { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+  }
+
+  /* ── TOOL CARD ── */
+  .tool-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  /* ── TABS ── */
+  .tabs {
+    display: flex;
+    overflow-x: auto;
+    border-bottom: 1px solid var(--border);
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    flex-shrink: 0;
+    padding: 14px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    border: none;
+    background: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    font-family: var(--font-body);
+    white-space: nowrap;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  /* ── FORM AREA ── */
+  .form-area { padding: 24px; }
+  .field-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .field-full { grid-column: 1 / -1; }
+  .field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .field input, .field select, .field textarea {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 10px 14px;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    border-color: var(--accent);
+  }
+  .field select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%238b8aa0' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+  }
+
+  .generate-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border: none;
+    border-radius: var(--r);
+    color: #fff;
+    font-family: var(--font-head);
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .generate-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+  .generate-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  /* ── MID AD ── */
+  .mid-ad {
+    margin: 0 24px;
+    min-height: 90px;
+    background: rgba(255,255,255,0.02);
+    border: 1px dashed rgba(255,255,255,0.08);
+    border-radius: var(--r);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* ── OUTPUT ── */
+  .output-area {
+    padding: 24px;
+    border-top: 1px solid var(--border);
+  }
+  .output-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .output-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .copy-btn {
+    font-size: 12px;
+    padding: 5px 12px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition: all 0.2s;
+    display: none;
+  }
+  .copy-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+  .copy-btn.success { color: var(--success); border-color: var(--success); }
+
+  .output-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 16px;
+    min-height: 140px;
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--muted);
+    white-space: pre-wrap;
+    font-style: italic;
+    transition: color 0.3s;
+  }
+  .output-box.filled {
+    color: var(--text);
+    font-style: normal;
+  }
+
+  /* ── LOADING ── */
+  .dots { display: inline-flex; gap: 5px; align-items: center; }
+  .dots span {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: blink 1.2s infinite;
+  }
+  .dots span:nth-child(2) { animation-delay: 0.2s; }
+  .dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes blink { 0%,80%,100%{opacity:0.2} 40%{opacity:1} }
+
+  /* ── SIDEBAR ── */
+  .sidebar { display: flex; flex-direction: column; gap: 16px; }
+  .sidebar-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+  }
+  .sidebar-title {
+    font-family: var(--font-head);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .sidebar-ad {
+    min-height: 250px;
+    background: rgba(255,255,255,0.02);
+    border: 1px dashed rgba(255,255,255,0.08);
+    border-radius: var(--r);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .tip-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .tip-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+
+  /* ── FOOTER AD ── */
+  .footer-ad {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    min-height: 100px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .footer-ad .ad-slot {
+    width: 970px;
+    height: 90px;
+    max-width: 100%;
+    background: rgba(255,255,255,0.02);
+    border: 1px dashed rgba(255,255,255,0.08);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 12px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP LEADERBOARD AD -->
+<div class="ad-banner">
+  <!-- REPLACE THIS ENTIRE ins TAG WITH YOUR REAL ADSENSE CODE -->
+  <div class="ad-slot">📢 Google AdSense — Leaderboard 728×90 — Replace with your AdSense code</div>
+  <!--
+  <ins class="adsbygoogle"
+       style="display:inline-block;width:728px;height:90px"
+       data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+       data-ad-slot="XXXXXXXXXX"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  -->
+</div>
+
+<div style="max-width:1200px;margin:0 auto;">
+  <header>
+    <div class="logo">AIWrite Pro</div>
+    <span class="badge">100% Free</span>
+  </header>
+</div>
+
+<div class="hero">
+  <h1>Create <span>any content</span><br>in seconds — free</h1>
+  <p>Powered by AI. No sign-up needed. Blog posts, ads, captions, emails — all generated instantly.</p>
+</div>
+
+<div class="main">
+  <!-- TOOL -->
+  <div>
+    <div class="tool-card">
+      <div class="tabs" id="tabs">
+        <button class="tab active" data-type="blog">Blog intro</button>
+        <button class="tab" data-type="caption">Social caption</button>
+        <button class="tab" data-type="ad">Ad copy</button>
+        <button class="tab" data-type="product">Product description</button>
+        <button class="tab" data-type="email">Email subject lines</button>
+        <button class="tab" data-type="bio">Bio / About me</button>
+      </div>
+
+      <div class="form-area" id="form-area"></div>
+
+      <!-- MID-CONTENT AD -->
+      <div class="mid-ad">
+        <!-- REPLACE WITH YOUR ADSENSE CODE -->
+        📢 AdSense — Rectangle 728×90 — Replace with your code
+        <!--
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        -->
+      </div>
+
+      <div class="output-area">
+        <div class="output-header">
+          <span class="output-label">Generated output</span>
+          <button class="copy-btn" id="copy-btn" onclick="copyOut()">Copy</button>
+        </div>
+        <div class="output-box" id="output">Your AI-generated content will appear here. Fill in the fields above and click Generate.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-card">
+      <div class="sidebar-title">Sidebar ad</div>
+      <div class="sidebar-ad">
+        📢 AdSense 300×250<br>Replace with your code
+        <!--
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:300px;height:250px"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        -->
+      </div>
+    </div>
+
+    <div class="sidebar-card">
+      <div class="sidebar-title">Tips for best results</div>
+      <div class="tip-item"><div class="tip-dot"></div><span>Be specific — detailed inputs = better outputs</span></div>
+      <div class="tip-item"><div class="tip-dot"></div><span>Try different tones for the same topic</span></div>
+      <div class="tip-item"><div class="tip-dot"></div><span>Generate multiple times and pick the best</span></div>
+      <div class="tip-item"><div class="tip-dot"></div><span>Edit the output to add your personal touch</span></div>
+    </div>
+
+    <div class="sidebar-card">
+      <div class="sidebar-title">Sidebar ad 2</div>
+      <div class="sidebar-ad" style="min-height:200px;">
+        📢 AdSense 300×200<br>Replace with your code
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER AD -->
+<div class="footer-ad">
+  <div class="ad-slot">📢 AdSense — Large Rectangle 970×90 — Replace with your code</div>
+</div>
+
+<footer>
+  &copy; 2026 AIWrite Pro &mdash; Free AI content tools &mdash; Powered by Claude AI
+</footer>
+
+<script>
+const templates = {
+  blog: {
+    fields: [
+      { id:'topic', label:'Blog topic', placeholder:'e.g. 10 tips for healthy eating', type:'text', full:true },
+      { id:'audience', label:'Target audience', placeholder:'e.g. busy parents, students', type:'text' },
+      { id:'tone', label:'Tone', type:'select', opts:['Professional','Conversational','Inspirational','Humorous','Educational'] }
+    ],
+    prompt: f => `Write a compelling blog post introduction (around 120 words) about: "${f.topic}". Target audience: ${f.audience}. Tone: ${f.tone}. Hook the reader immediately with a strong opening sentence. No title needed — just the intro paragraph.`
+  },
+  caption: {
+    fields: [
+      { id:'topic', label:'Product or topic', placeholder:'e.g. handmade candles, gym workout', type:'text', full:true },
+      { id:'platform', label:'Platform', type:'select', opts:['Instagram','Facebook','TikTok','LinkedIn','Twitter/X'] },
+      { id:'goal', label:'Goal', type:'select', opts:['Get engagement','Drive sales','Grow followers','Build brand awareness'] }
+    ],
+    prompt: f => `Write 3 different social media captions for ${f.platform} about: "${f.topic}". Goal: ${f.goal}. Include relevant emojis and hashtags. Label them Option 1, Option 2, Option 3. Keep each punchy and under 200 characters.`
+  },
+  ad: {
+    fields: [
+      { id:'product', label:'Product or service', placeholder:'e.g. logo design service, protein powder', type:'text', full:true },
+      { id:'benefit', label:'Main benefit', placeholder:'e.g. saves time, builds muscle faster', type:'text' },
+      { id:'platform', label:'Ad platform', type:'select', opts:['Facebook / Instagram','Google Search','LinkedIn','TikTok'] }
+    ],
+    prompt: f => `Write a ${f.platform} ad for: "${f.product}". Main benefit: ${f.benefit}. Format:\nHeadline: (max 8 words, punchy)\nBody: (2-3 sentences, benefit-driven)\nCTA: (short action phrase)\n\nMake it compelling and conversion-focused.`
+  },
+  product: {
+    fields: [
+      { id:'name', label:'Product name', placeholder:'e.g. Bamboo Water Bottle 500ml', type:'text', full:true },
+      { id:'features', label:'Key features (comma separated)', placeholder:'e.g. eco-friendly, leak-proof, keeps cold 24h', type:'text' },
+      { id:'tone', label:'Style', type:'select', opts:['Enthusiastic','Minimalist','Luxury','Friendly','Technical'] }
+    ],
+    prompt: f => `Write a product description (90-110 words) for: "${f.name}". Key features: ${f.features}. Style: ${f.tone}. Focus on benefits, not just features. End with a subtle call to action. Output only the description.`
+  },
+  email: {
+    fields: [
+      { id:'topic', label:'Email topic / offer', placeholder:'e.g. 50% off sale, new product launch', type:'text', full:true },
+      { id:'audience', label:'Who receives it', placeholder:'e.g. existing customers, newsletter subscribers', type:'text' },
+      { id:'goal', label:'Goal', type:'select', opts:['Drive clicks','Make a sale','Re-engage users','Build excitement','Share news'] }
+    ],
+    prompt: f => `Write 6 email subject lines for: "${f.topic}". Audience: ${f.audience}. Goal: ${f.goal}.\n\nUse 6 different strategies — curiosity gap, urgency, personalization, benefit-led, question, and emoji-driven. Number them 1–6. Keep each under 60 characters.`
+  },
+  bio: {
+    fields: [
+      { id:'name', label:'Name', placeholder:'e.g. Sarah Ahmed', type:'text' },
+      { id:'role', label:'Role or profession', placeholder:'e.g. freelance graphic designer, teacher', type:'text' },
+      { id:'skills', label:'Top skills or achievements', placeholder:'e.g. 5 years experience, 200+ clients', type:'text', full:true },
+      { id:'tone', label:'Tone', type:'select', opts:['Professional','Friendly','Bold','Minimalist'] }
+    ],
+    prompt: f => `Write a short professional bio (80-100 words) for: ${f.name}, who works as: ${f.role}. Key skills / achievements: ${f.skills}. Tone: ${f.tone}. Write in third person. Make it compelling for a website About page or LinkedIn.`
+  }
+};
+
+let currentType = 'blog';
+
+function renderForm(type) {
+  currentType = type;
+  const tpl = templates[type];
+  const area = document.getElementById('form-area');
+  let html = '<div class="field-group">';
+  tpl.fields.forEach(f => {
+    const fullClass = f.full ? ' field-full' : '';
+    html += `<div class="field${fullClass}"><label for="${f.id}">${f.label}</label>`;
+    if (f.type === 'select') {
+      html += `<select id="${f.id}">${f.opts.map(o=>`<option>${o}</option>`).join('')}</select>`;
+    } else {
+      html += `<input type="text" id="${f.id}" placeholder="${f.placeholder||''}">`;
+    }
+    html += '</div>';
+  });
+  html += '</div>';
+  html += '<button class="generate-btn" onclick="generate()">✦ Generate content</button>';
+  area.innerHTML = html;
+  const out = document.getElementById('output');
+  out.textContent = 'Your AI-generated content will appear here. Fill in the fields above and click Generate.';
+  out.className = 'output-box';
+  document.getElementById('copy-btn').style.display = 'none';
+}
+
+document.getElementById('tabs').addEventListener('click', e => {
+  const tab = e.target.closest('.tab');
+  if (!tab) return;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  tab.classList.add('active');
+  renderForm(tab.dataset.type);
+});
+
+async function generate() {
+  const tpl = templates[currentType];
+  const fields = {};
+  let valid = true;
+  tpl.fields.forEach(f => {
+    const el = document.getElementById(f.id);
+    fields[f.id] = el ? el.value.trim() : '';
+    if (f.type !== 'select' && !fields[f.id]) valid = false;
+  });
+  if (!valid) {
+    const out = document.getElementById('output');
+    out.textContent = 'Please fill in all fields before generating.';
+    out.className = 'output-box';
+    return;
+  }
+  const btn = document.querySelector('.generate-btn');
+  btn.disabled = true;
+  btn.textContent = 'Generating...';
+  const out = document.getElementById('output');
+  out.className = 'output-box';
+  out.innerHTML = '<span class="dots"><span></span><span></span><span></span></span> Generating your content...';
+  document.getElementById('copy-btn').style.display = 'none';
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: tpl.prompt(fields) }]
+      })
+    });
+    const data = await res.json();
+    const text = data.content?.map(b => b.text||'').join('') || 'Error. Please try again.';
+    out.textContent = text;
+    out.className = 'output-box filled';
+    document.getElementById('copy-btn').style.display = 'inline-block';
+  } catch(e) {
+    out.textContent = 'Something went wrong. Please check your connection and try again.';
+    out.className = 'output-box';
+  }
+
+  btn.disabled = false;
+  btn.textContent = '✦ Generate content';
+}
+
+function copyOut() {
+  const text = document.getElementById('output').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = 'Copied!';
+    btn.classList.add('success');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('success'); }, 2000);
+  });
+}
+
+renderForm('blog');
+</script>
+</body>
+</html>
